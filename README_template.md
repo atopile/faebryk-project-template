@@ -1,19 +1,19 @@
 <div align="center">
 
-# {%Project Name%}
+# TEMPLATE_VAR_project_name
 
 <img height=300 title="Render front" src="./build/visuals/render_front.png"/>
 <br/>
 
-{%short_project_description%}
+TEMPLATE_VAR_short_description
 
-[![Version](https://img.shields.io/github/v/tag/{%git_owner%}/{%git_project_name%})](https://github.com/{%git_owner%}/{%git_project_name%}/releases) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/{%git_owner%}/{%git_project_name%}/blob/main/LICENSE) [![Pull requests open](https://img.shields.io/github/issues-pr/{%git_owner%}/{%git_project_name%})](https://github.com/{%git_owner%}/{%git_project_name%}/pulls) [![Issues open](https://img.shields.io/github/issues/{%git_owner%}/{%git_project_name%})](https://github.com/{%git_owner%}/{%git_project_name%}/issues) [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/{%git_owner%}/{%git_project_name%})](https://github.com/{%git_owner%}/{%git_project_name%}/commits/main) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Version](https://img.shields.io/github/v/tag/TEMPLATE_VAR_github)](https://github.com/TEMPLATE_VAR_github/releases) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/TEMPLATE_VAR_github/blob/main/LICENSE) [![Pull requests open](https://img.shields.io/github/issues-pr/TEMPLATE_VAR_github)](https://github.com/TEMPLATE_VAR_github/pulls) [![Issues open](https://img.shields.io/github/issues/TEMPLATE_VAR_github)](https://github.com/TEMPLATE_VAR_github/issues) [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/TEMPLATE_VAR_github)](https://github.com/TEMPLATE_VAR_github/commits/main) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 </div>
 
 ## About
 
-{%detailed_project_description%}
+Type here your detailed project description.
 
 This project is build with the open-source EDA [faebryk](https://github.com/faebryk/faebryk).
 
@@ -36,6 +36,6 @@ Community support is provided via Discord; see the Resources below for details.
 
 ### Resources
 
-- Source Code: [Github](https://github.com/{%git_owner%}/{%git_project_name%})
+- Source Code: [Github](https://github.com/TEMPLATE_VAR_github)
 - Chat: Real-time chat happens in faebryk's Discord Server (show-off). Use this Discord [Invite](https://discord.gg/95jYuPmnUW) to register
-- Issues: [Issues](https://github.com/{%git_owner%}/{%git_project_name%}/issues)
+- Issues: [Issues](https://github.com/TEMPLATE_VAR_github/issues)
