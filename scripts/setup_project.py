@@ -44,7 +44,7 @@ VARS = [
     Var(
         "github",
         "<owner|org>/<repo>",
-        regex=r"^[a-zA-Z0-9-]+/[a-zA-Z0-9-]+$",
+        regex=r"^[a-zA-Z0-9-_]+/[a-zA-Z0-9-_]+$",
     ),
     Var("gh_user", "Your github username"),
     Var(
