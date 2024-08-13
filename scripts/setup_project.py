@@ -67,6 +67,10 @@ FILES = [
     "README_template.md",
 ]
 
+MOVE = {
+    "README_template.md": "README.md",
+}
+
 CACHE_FILE_PATH = Path("/tmp/app_template_cache.json")
 
 
@@ -132,7 +136,7 @@ def main(cache: bool = True, dry_run: bool = False):
         path = root.joinpath(path_name)
         if path.is_dir():
             files.extend(p for p in path.rglob("*") if p.is_file())
-        else:
+        elif path.is_file():
             files.append(path)
 
     # Replace vars --------------------------------------------------
@@ -160,8 +164,10 @@ def main(cache: bool = True, dry_run: bool = False):
             out_path.write_text(text)
 
     # Remove template files ----------------------------------------
-    (root / "README.md").unlink()
-    (root / "README_template.md").rename(root / "README.md")
+    if not dry_run:
+        for k, v in MOVE.items():
+            if (root / k).exists():
+                (root / k).rename(root / v)
 
 
 if __name__ == "__main__":
