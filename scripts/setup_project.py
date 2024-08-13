@@ -8,6 +8,9 @@ from pathlib import Path
 from typing import Callable
 
 import typer
+from rich.console import Console
+from rich.prompt import Confirm, Prompt
+from rich.table import Table
 
 PREFIX = "TEMPLATE_VAR_"
 
@@ -84,11 +87,12 @@ def move_file_and_delete_empty_parent(old: Path, new: Path):
 
 
 def main(cache: bool = True, dry_run: bool = False):
+    console = Console()
     replacements = {}
 
     if cache and CACHE_FILE_PATH.exists():
         replacements = json.loads(CACHE_FILE_PATH.read_text())
-        print("Warning: using cached values:", replacements)
+        console.print("[yellow]Warning: using cached values:[/yellow]", replacements)
 
     for var in VARS:
         key = f"{PREFIX}{var.key}"
@@ -98,7 +102,7 @@ def main(cache: bool = True, dry_run: bool = False):
 
         while True:
             if not var.no_prompt:
-                value = typer.prompt(var.description)
+                value = Prompt.ask(f"[green]{var.description}[/green]", console=console)
 
             if var.transform:
                 value = var.transform(value)
@@ -106,28 +110,43 @@ def main(cache: bool = True, dry_run: bool = False):
             if var.lower_case:
                 value_post = value.lower()
                 if value_post != value:
-                    print(
-                        "Warning: converting to lower case: " f"{value} -> {value_post}"
+                    console.print(
+                        "[yellow]Warning: converting to lower case: [/yellow]"
+                        f"{value} -> {value_post}"
                     )
                 value = value_post
 
             if var.valid_python_name:
                 value_post = value.replace("-", "_")
                 if value_post != value:
-                    print(
-                        "Warning: converting to python name: "
+                    console.print(
+                        "[yellow]Warning: converting to python name: [/yellow]"
                         f"{value} -> {value_post}"
                     )
                 value = value_post
 
             if var.regex:
                 if not re.match(var.regex, value):
-                    print(f"Invalid value: {value}")
+                    console.print(f"[red]Invalid value:[/red] [yellow]{value}[/yellow]")
                     continue
 
             replacements[key] = value
             CACHE_FILE_PATH.write_text(json.dumps(replacements))
             break
+
+    # show 'replacements' and ask for confirmation
+    table = Table(title="Project variables")
+    table.add_column("Variable", justify="left", style="cyan", no_wrap=True)
+    table.add_column("Value", justify="center", style="magenta", no_wrap=False)
+    for key in replacements:
+        table.add_row(
+            str(key).replace("TEMPLATE_VAR_", "").replace("_", " "), replacements[key]
+        )
+    console.print(table)
+    if not Confirm.ask("Do you want to continue with these settings?", console=console):
+        if CACHE_FILE_PATH.exists():
+            CACHE_FILE_PATH.unlink()
+        return
 
     # Get files --------------------------------------------------
     root = Path(__file__).parent.parent
@@ -147,7 +166,7 @@ def main(cache: bool = True, dry_run: bool = False):
         # Replace in text
         for k, v in replacements.items():
             if k in text:
-                print(f"Replacing  in {f}: |{k}| -> |{v}|")
+                console.print(f"Replacing  in {f}: |{k}| -> |{v}|")
                 text = text.replace(k, v)
             if k in str(out_path):
                 out_path = Path(str(out_path).replace(k, v))
@@ -156,7 +175,9 @@ def main(cache: bool = True, dry_run: bool = False):
 
         # Replace in path
         if out_path != f:
-            print(f"Renaming {f.relative_to(root)} -> {out_path.relative_to(root)}")
+            console.print(
+                f"Renaming {f.relative_to(root)} -> {out_path.relative_to(root)}"
+            )
             if not dry_run:
                 move_file_and_delete_empty_parent(f, out_path)
 
