@@ -3,6 +3,7 @@
 import datetime
 import json
 import re
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
@@ -193,6 +194,30 @@ def main(cache: bool = True, dry_run: bool = False):
             if (root / k).exists():
                 (root / k).rename(root / v)
 
+    # Remove/re-init .git dir ----------------------------------------
+    try:
+        if (root / ".git").exists():
+            console.print("Removing .git directory")
+            if not dry_run:
+                subprocess.run(
+                    ["rm", "-rf", ".git"],
+                    cwd=root,
+                    check=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                )
+    except subprocess.CalledProcessError as e:
+        console.print(f"[red]Error removing .git dir:[/red] {e}")
+    else:
+        console.print("Initing git")
+        if not dry_run:
+            subprocess.run(
+                ["git", "init"],
+                cwd=root,
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
 
 if __name__ == "__main__":
     typer.run(main)
