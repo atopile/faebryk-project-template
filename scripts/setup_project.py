@@ -50,6 +50,13 @@ VARS = [
         no_prompt=True,
         transform=lambda _: str(datetime.datetime.now().year),
     ),
+    # TODO add support for other licenses
+    Var(
+        "license",
+        "License of the project",
+        no_prompt=True,
+        transform=lambda _: "MIT",
+    ),
 ]
 
 FILES = [
