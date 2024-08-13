@@ -152,6 +152,10 @@ def main(cache: bool = True, dry_run: bool = False):
         if not dry_run:
             out_path.write_text(text)
 
+    # Remove template files ----------------------------------------
+    (root / "README.md").unlink()
+    (root / "README_template.md").rename(root / "README.md")
+
 
 if __name__ == "__main__":
     typer.run(main)
