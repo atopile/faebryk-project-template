@@ -72,6 +72,7 @@ FILES = [
 
 MOVE = {
     "README_template.md": "README.md",
+    "template_gitignore": ".gitignore",
 }
 
 CACHE_FILE_PATH = Path("/tmp/app_template_cache.json")
