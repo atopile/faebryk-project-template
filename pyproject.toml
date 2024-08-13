@@ -9,7 +9,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 authors = ["TEMPLATE_VAR_author_name <TEMPLATE_VAR_author_email>"]
 name = "TEMPLATE_VAR_project_name"
-version = "TEMPLATE_VAR_version"
+version = "0.0.1"
 readme = ["README.md", "LICENSE"]
 license = "TEMPLATE_VAR_license"
 description = "TEMPLATE_VAR_short_description"
