@@ -63,6 +63,15 @@ FILES = [
 CACHE_FILE_PATH = Path("/tmp/app_template_cache.json")
 
 
+def move_file_and_delete_empty_parent(old: Path, new: Path):
+    new.parent.mkdir(parents=True, exist_ok=True)
+    old.rename(new)
+
+    for p in old.parents:
+        if not list(p.glob("*")):
+            p.rmdir()
+
+
 def main(cache: bool = True, dry_run: bool = False):
     replacements = {}
 
@@ -122,12 +131,26 @@ def main(cache: bool = True, dry_run: bool = False):
     # Replace vars --------------------------------------------------
     for f in files:
         text = f.read_text()
+        out_path = f.relative_to(root)
+
+        # Replace in text
         for k, v in replacements.items():
             if k in text:
                 print(f"Replacing  in {f}: |{k}| -> |{v}|")
                 text = text.replace(k, v)
+            if k in str(out_path):
+                out_path = Path(str(out_path).replace(k, v))
+
+        out_path = root / out_path
+
+        # Replace in path
+        if out_path != f:
+            print(f"Renaming {f.relative_to(root)} -> {out_path.relative_to(root)}")
+            if not dry_run:
+                move_file_and_delete_empty_parent(f, out_path)
+
         if not dry_run:
-            f.write_text(text)
+            out_path.write_text(text)
 
 
 if __name__ == "__main__":
