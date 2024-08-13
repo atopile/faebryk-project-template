@@ -143,7 +143,9 @@ def main(cache: bool = True, dry_run: bool = False):
             str(key).replace("TEMPLATE_VAR_", "").replace("_", " "), replacements[key]
         )
     console.print(table)
-    if not Confirm.ask("Do you want to continue with these settings?", console=console):
+    if not Confirm.ask(
+        "Do you want to continue with these settings?", default=True, console=console
+    ):
         if CACHE_FILE_PATH.exists():
             CACHE_FILE_PATH.unlink()
         return
