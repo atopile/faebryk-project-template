@@ -13,46 +13,50 @@ logger = logging.getLogger(__name__)
 # If you come from a classical EDA background, think of these as hiearchical sheets
 
 
-class MyApplicationModule(Module):
-    def __init__(self) -> None:
-        super().__init__()
-
-        class _NODEs(Module.NODES()):
-            submodule = MyApplicationModuleSubmodule()
-            pass
-
-        class _IFs(Module.IFS()):
-            pass
-
-        class _PARAMs(Module.PARAMS()):
-            pass
-
-        self.IFs = _IFs(self)
-        self.NODEs = _NODEs(self)
-        self.PARAMs = _PARAMs(self)
-
-        # self.add_trait()
-        # self.add_trait()
-        # self.add_trait()
-
-
 class MyApplicationModuleSubmodule(Module):
-    def __init__(self) -> None:
-        super().__init__()
+    """
+    Docstring describing your module
+    """
 
-        class _NODEs(Module.NODES()):
-            pass
+    # ----------------------------------------
+    #     modules, interfaces, parameters
+    # ----------------------------------------
 
-        class _IFs(Module.IFS()):
-            pass
+    # ----------------------------------------
+    #                 traits
+    # ----------------------------------------
 
-        class _PARAMs(Module.PARAMS()):
-            pass
+    def __preinit__(self):
+        # ------------------------------------
+        #           connections
+        # ------------------------------------
 
-        self.IFs = _IFs(self)
-        self.NODEs = _NODEs(self)
-        self.PARAMs = _PARAMs(self)
+        # ------------------------------------
+        #          parametrization
+        # ------------------------------------
+        pass
 
-        # self.add_trait()
-        # self.add_trait()
-        # self.add_trait()
+
+class MyApplicationModule(Module):
+    """
+    Docstring describing your module
+    """
+
+    # ----------------------------------------
+    #     modules, interfaces, parameters
+    # ----------------------------------------
+    submdule: MyApplicationModuleSubmodule
+
+    # ----------------------------------------
+    #                 traits
+    # ----------------------------------------
+
+    def __preinit__(self):
+        # ------------------------------------
+        #           connections
+        # ------------------------------------
+
+        # ------------------------------------
+        #          parametrization
+        # ------------------------------------
+        pass
