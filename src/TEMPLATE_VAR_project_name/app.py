@@ -4,7 +4,8 @@
 import logging
 
 import faebryk.library._F as F
-from faebryk.core.core import Module
+from faebryk.core.module import Module
+
 from TEMPLATE_VAR_project_name.library.my_library_module import MyLibraryModule
 from TEMPLATE_VAR_project_name.modules.my_application_module import MyApplicationModule
 
@@ -20,32 +21,39 @@ Avoid putting any low-level modules or parameter specializations here.
 
 
 class MyApp(Module):
-    def __init__(self) -> None:
-        super().__init__()
+    """
+    Docstring describing your app
+    """
 
-        # modules ------------------------------------
-        class _NODEs(Module.NODES()):
-            submodule = MyApplicationModule()
-            my_part = MyLibraryModule()
-            pass
+    # ----------------------------------------
+    #     modules, interfaces, parameters
+    # ----------------------------------------
+    submodule: MyApplicationModule
+    my_part: MyLibraryModule
+    # ----------------------------------------
+    #                 traits
+    # ----------------------------------------
 
-        class _PARAMs(Module.PARAMS()):
-            pass
+    def __preinit__(self):
+        # ------------------------------------
+        #           connections
+        # ------------------------------------
 
-        self.NODEs = _NODEs(self)
-        self.PARAMs = _PARAMs(self)
-
-        # net names ----------------------------------
+        # ------------------------------------
+        #            net names
+        # ------------------------------------
         nets = {
-            # "in_5v": ...power.IFs.hv,
-            # "gnd": ...power.IFs.lv,
+            # "in_5v": ...power.hv,
+            # "gnd": ...power.lv,
         }
         for net_name, mif in nets.items():
             net = F.Net.with_name(net_name)
             net.IFs.part_of.connect(mif)
 
-        # parametrization ----------------------------
+        # ------------------------------------
+        #           specialize
+        # ------------------------------------
 
-        # specialize
-
-        # set global params
+        # ------------------------------------
+        #          parametrization
+        # ------------------------------------

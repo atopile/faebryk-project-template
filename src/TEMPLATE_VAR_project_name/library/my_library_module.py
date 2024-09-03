@@ -3,7 +3,7 @@
 
 import logging
 
-from faebryk.core.core import Module
+from faebryk.core.module import Module
 
 logger = logging.getLogger(__name__)
 
@@ -20,22 +20,24 @@ logger = logging.getLogger(__name__)
 
 
 class MyLibraryModule(Module):
-    def __init__(self) -> None:
-        super().__init__()
+    """
+    Docstring describing your module
+    """
 
-        class _NODEs(Module.NODES()):
-            pass
+    # ----------------------------------------
+    #     modules, interfaces, parameters
+    # ----------------------------------------
 
-        class _IFs(Module.IFS()):
-            pass
+    # ----------------------------------------
+    #                 traits
+    # ----------------------------------------
 
-        class _PARAMs(Module.PARAMS()):
-            pass
+    def __preinit__(self):
+        # ------------------------------------
+        #           connections
+        # ------------------------------------
 
-        self.NODEs = _NODEs(self)
-        self.IFs = _IFs(self)
-        self.PARAMs = _PARAMs(self)
-
-        # self.add_trait()
-        # self.add_trait()
-        # self.add_trait()
+        # ------------------------------------
+        #          parametrization
+        # ------------------------------------
+        pass

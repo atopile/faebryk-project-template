@@ -4,8 +4,7 @@
 import logging
 
 import faebryk.library._F as F
-from faebryk.core.core import Module
-from faebryk.library.Constant import Constant
+from faebryk.core.module import Module
 from faebryk.libs.picker.lcsc import LCSC_Part
 from faebryk.libs.picker.picker import PickerOption, pick_module_by_params
 
@@ -26,7 +25,7 @@ def pick_resistor(resistor: F.Resistor):
         [
             PickerOption(
                 part=LCSC_Part(partno="C25076"),
-                params={"resistance": Constant(100)},
+                params={"resistance": F.Constant(100)},
             ),
         ],
     )
@@ -40,20 +39,20 @@ def pick_led(module: F.LED):
             PickerOption(
                 part=LCSC_Part(partno="C2286"),
                 params={
-                    "color": Constant(F.LED.Color.GREEN),
-                    "max_brightness": Constant(285e-3),
-                    "forward_voltage": Constant(3.7),
-                    "max_current": Constant(100e-3),
+                    "color": F.Constant(F.LED.Color.GREEN),
+                    "max_brightness": F.Constant(285e-3),
+                    "forward_voltage": F.Constant(3.7),
+                    "max_current": F.Constant(100e-3),
                 },
                 pinmap={"1": module.IFs.cathode, "2": module.IFs.anode},
             ),
             PickerOption(
                 part=LCSC_Part(partno="C72041"),
                 params={
-                    "color": Constant(F.LED.Color.BLUE),
-                    "max_brightness": Constant(28.5e-3),
-                    "forward_voltage": Constant(3.1),
-                    "max_current": Constant(100e-3),
+                    "color": F.Constant(F.LED.Color.BLUE),
+                    "max_brightness": F.Constant(28.5e-3),
+                    "forward_voltage": F.Constant(3.1),
+                    "max_current": F.Constant(100e-3),
                 },
                 pinmap={"1": module.IFs.cathode, "2": module.IFs.anode},
             ),
