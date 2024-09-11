@@ -44,7 +44,7 @@ def pick_led(module: F.LED):
                     "forward_voltage": F.Constant(3.7),
                     "max_current": F.Constant(100e-3),
                 },
-                pinmap={"1": module.IFs.cathode, "2": module.IFs.anode},
+                pinmap={"1": module.cathode, "2": module.anode},
             ),
             PickerOption(
                 part=LCSC_Part(partno="C72041"),
@@ -54,7 +54,7 @@ def pick_led(module: F.LED):
                     "forward_voltage": F.Constant(3.1),
                     "max_current": F.Constant(100e-3),
                 },
-                pinmap={"1": module.IFs.cathode, "2": module.IFs.anode},
+                pinmap={"1": module.cathode, "2": module.anode},
             ),
         ],
     )

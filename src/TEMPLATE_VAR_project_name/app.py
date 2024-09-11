@@ -3,8 +3,10 @@
 
 import logging
 
-import faebryk.library._F as F
+import faebryk.library._F as F  # noqa: F401
 from faebryk.core.module import Module
+from faebryk.libs.library import L  # noqa: F401
+from faebryk.libs.units import P  # noqa: F401
 
 from TEMPLATE_VAR_project_name.library.my_library_module import MyLibraryModule
 from TEMPLATE_VAR_project_name.modules.my_application_module import MyApplicationModule
@@ -48,7 +50,7 @@ class MyApp(Module):
         }
         for net_name, mif in nets.items():
             net = F.Net.with_name(net_name)
-            net.IFs.part_of.connect(mif)
+            net.part_of.connect(mif)
 
         # ------------------------------------
         #           specialize
